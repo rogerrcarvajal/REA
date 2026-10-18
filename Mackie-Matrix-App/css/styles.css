@@ -1,0 +1,527 @@
+/**
+ * @file styles.css
+ * @author Rogerr Carvajal (@rogerrcarvajal)
+ * @description Diseño Glassmorphic Quantum Dark + Mackie Green para Mackie Matrix Console M2 en iPad Pro M2
+ */
+
+:root {
+  --bg-primary: #0A0E17;
+  --bg-secondary: #111827;
+  --bg-glass: rgba(17, 24, 39, 0.78);
+  --bg-glass-elevated: rgba(30, 41, 59, 0.88);
+  --border-glass: rgba(255, 255, 255, 0.12);
+  --border-highlight: rgba(132, 204, 22, 0.55);
+
+  --accent-cyan: #00F2FE;
+  --accent-indigo: #6366F1;
+  --accent-mackie: #9CCC56;
+  --accent-emerald: #10B981;
+  --accent-amber: #F59E0B;
+  --accent-rose: #F43F5E;
+
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+
+  --safe-top: env(safe-area-inset-top, 10px);
+  --safe-bottom: env(safe-area-inset-bottom, 14px);
+  --safe-left: env(safe-area-inset-left, 14px);
+  --safe-right: env(safe-area-inset-right, 14px);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: var(--bg-primary);
+  background-image:
+    radial-gradient(circle at 10% 10%, rgba(156, 204, 86, 0.11), transparent 36%),
+    radial-gradient(circle at 90% 15%, rgba(0, 242, 254, 0.10), transparent 38%),
+    radial-gradient(circle at 50% 90%, rgba(99, 102, 241, 0.12), transparent 44%);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Display', sans-serif;
+  font-size: 13px;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  height: 100dvh;
+  padding: calc(var(--safe-top) + 6px) calc(var(--safe-right) + 12px) calc(var(--safe-bottom) + 6px) calc(var(--safe-left) + 12px);
+  gap: 10px;
+}
+
+/* Header & Submix Tabs */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 14px;
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border-glass);
+  border-radius: 14px;
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 9px;
+  object-fit: cover;
+  border: 1px solid var(--accent-mackie);
+}
+
+.brand-title h1 {
+  font-size: 1.02rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge {
+  font-size: 0.68rem;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.badge-m2 {
+  background: rgba(0, 242, 254, 0.16);
+  border: 1px solid var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.badge-mackie {
+  background: rgba(156, 204, 86, 0.18);
+  border: 1px solid var(--accent-mackie);
+  color: var(--accent-mackie);
+}
+
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  min-height: 42px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-glass);
+  background: var(--bg-glass-elevated);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.76rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, rgba(156, 204, 86, 0.25), rgba(16, 185, 129, 0.28));
+  border-color: var(--accent-mackie);
+}
+
+.btn-cyan {
+  background: linear-gradient(135deg, rgba(0, 242, 254, 0.22), rgba(99, 102, 241, 0.28));
+  border-color: var(--accent-cyan);
+}
+
+/* Submix Selector Bar (4 Output Buses + Navigation Tabs) */
+.submix-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 12px;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: 14px;
+  flex-wrap: wrap;
+}
+
+.submix-tabs, .view-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.submix-btn {
+  min-height: 44px;
+  padding: 6px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-glass);
+  background: rgba(15, 23, 42, 0.72);
+  color: var(--text-secondary);
+  font-weight: 700;
+  font-size: 0.76rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  transition: all 0.16s ease;
+}
+
+.submix-btn small {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.submix-btn.active {
+  border-color: var(--accent-mackie);
+  background: linear-gradient(135deg, rgba(156, 204, 86, 0.22), rgba(15, 23, 42, 0.92));
+  color: var(--text-primary);
+  box-shadow: 0 0 16px rgba(156, 204, 86, 0.25);
+}
+
+.submix-btn.active small {
+  color: var(--accent-mackie);
+}
+
+.view-tab {
+  min-height: 42px;
+  padding: 6px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-glass);
+  background: rgba(15, 23, 42, 0.72);
+  color: var(--text-secondary);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.view-tab.active {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  background: rgba(0, 242, 254, 0.14);
+}
+
+/* Main Console Area */
+.console-main {
+  display: grid;
+  grid-template-columns: 1fr 310px;
+  gap: 10px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.view-panel {
+  background: var(--bg-glass);
+  backdrop-filter: blur(18px);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  padding: 12px;
+  overflow: hidden;
+  display: none;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.view-panel.active {
+  display: flex;
+}
+
+/* Mixer Channels Grid (9 Input Strips) */
+.channels-strip-container {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(98px, 1fr));
+  gap: 8px;
+  height: 100%;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.channel-strip {
+  background: rgba(15, 23, 42, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-top: 4px solid var(--ch-color, #9ccc56);
+  border-radius: 12px;
+  padding: 8px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.ch-header {
+  text-align: center;
+  width: 100%;
+}
+
+.ch-icon {
+  font-size: 1.25rem;
+  margin-bottom: 2px;
+}
+
+.ch-name {
+  font-weight: 700;
+  font-size: 0.74rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ch-device {
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fader-well {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+   gap: 8px;
+  padding: 6px 0;
+}
+
+.v-fader {
+  writing-mode: vertical-lr;
+  direction: rtl;
+  width: 34px;
+  height: 100%;
+  min-height: 135px;
+  accent-color: var(--ch-color, #9ccc56);
+  cursor: pointer;
+}
+
+.vu-bar-track {
+  width: 8px;
+  height: 100%;
+  min-height: 135px;
+  background: #050811;
+  border-radius: 999px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.vu-bar-fill {
+  width: 100%;
+  height: 60%;
+  background: linear-gradient(to top, #10B981 0%, #9CCC56 70%, #F59E0B 88%, #F43F5E 100%);
+  transition: height 0.08s linear;
+}
+
+.ch-vol-readout {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: var(--text-primary);
+}
+
+.ch-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  width: 100%;
+}
+
+.ch-mini-btn {
+  min-height: 34px;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(30, 41, 59, 0.8);
+  color: var(--text-secondary);
+  font-weight: 700;
+  font-size: 0.66rem;
+  cursor: pointer;
+}
+
+.ch-mini-btn.mute-on {
+  background: var(--accent-rose);
+  border-color: var(--accent-rose);
+  color: #fff;
+}
+
+.ch-mini-btn.solo-on {
+  background: var(--accent-amber);
+  border-color: var(--accent-amber);
+  color: #000;
+}
+
+.ch-mini-btn.link-on {
+  background: rgba(0, 242, 254, 0.24);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.ch-dsp-tags {
+  display: flex;
+  gap: 4px;
+  width: 100%;
+}
+
+.dsp-pill {
+  flex: 1;
+  text-align: center;
+  padding: 4px 2px;
+  font-size: 0.62rem;
+  border-radius: 6px;
+  background: rgba(156, 204, 86, 0.14);
+  border: 1px solid rgba(156, 204, 86, 0.35);
+  color: var(--accent-mackie);
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Tab 2: 5-Band Parametric EQ & MVoice DSP */
+.eq-layout {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 10px;
+  height: 100%;
+}
+
+.eq-canvas-wrap {
+  position: relative;
+  background: #050811;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  overflow: hidden;
+  min-height: 180px;
+}
+
+#eqCurveCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.eq-bands-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.eq-band-card {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid var(--border-glass);
+  border-radius: 10px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.eq-band-card h4 {
+  font-size: 0.74rem;
+  color: var(--accent-cyan);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Tab 3: 32 Sample Pads (Banks A, B, C, D) */
+.pads-bank-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.sample-pad-btn {
+  min-height: 78px;
+  border-radius: 14px;
+  border: 2px solid var(--pad-color, #9ccc56);
+  background: linear-gradient(145deg, rgba(30, 41, 59, 0.88), rgba(10, 14, 23, 0.96));
+  color: var(--text-primary);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.15s ease;
+}
+
+.sample-pad-btn:active, .sample-pad-btn.playing {
+  transform: scale(0.96);
+  box-shadow: 0 0 22px var(--pad-color, #9ccc56);
+}
+
+/* Right Master Submix Column */
+.master-column {
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+.submix-fader-row {
+  background: rgba(15, 23, 42, 0.78);
+  border: 1px solid var(--border-glass);
+  border-radius: 10px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.footer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 14px;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: 10px;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+
+.footer-bar a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .channel-strip:hover, .sample-pad-btn:hover, .btn:hover {
+    border-color: var(--accent-cyan);
+  }
+}
+
+@media (max-width: 1080px) {
+  .console-main {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+}

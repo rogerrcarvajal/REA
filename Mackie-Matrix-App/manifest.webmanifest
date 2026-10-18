@@ -1,0 +1,20 @@
+{
+  "name": "Mackie Matrix Console M2 — Consola Digital 9x4 & DSP",
+  "short_name": "Mackie Matrix M2",
+  "description": "Consola digital de enrutamiento 9x4, EQ Paramétrico de 5 Bandas, MVoice, VFX y 32 Sample Pads compatible con archivos .mackie para iPad Pro M2. Creado con REA por Rogerr Carvajal.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#0A0E17",
+  "theme_color": "#0A0E17",
+  "categories": ["music", "multimedia", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "assets/matrix-software.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

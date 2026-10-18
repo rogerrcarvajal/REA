@@ -1,0 +1,13 @@
+{
+  "appId": "com.rogerrcarvajal.rea.mackiematrix",
+  "appName": "Mackie Matrix M2",
+  "webDir": ".",
+  "bundledWebRuntime": false,
+  "ios": {
+    "contentInset": "always",
+    "allowsLinkPreview": false,
+    "scrollEnabled": false,
+    "backgroundColor": "#0A0E17",
+    "preferredContentMode": "desktop"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "Mackie MainStream Studio M2 — UVC Capture & Control",
+  "short_name": "MainStream M2",
+  "description": "Estudio de captura de video HDMI UVC y control físico para Mackie MainStream optimizado para iPad Pro M2 (iPadOS 17+ / Apple Silicon ARM64). Diseñado con REA por Rogerr Carvajal.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0A0E17",
+  "theme_color": "#0A0E17",
+  "categories": ["multimedia", "music", "video", "utilities"],
+  "icons": [
+    {
+      "src": "assets/Mainstream_Top.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

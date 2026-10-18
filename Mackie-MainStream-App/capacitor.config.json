@@ -1,0 +1,19 @@
+{
+  "appId": "com.rogerrcarvajal.rea.mackiemainstream",
+  "appName": "Mackie MainStream M2",
+  "webDir": ".",
+  "bundledWebRuntime": false,
+  "ios": {
+    "contentInset": "always",
+    "allowsLinkPreview": false,
+    "scrollEnabled": false,
+    "backgroundColor": "#0A0E17",
+    "preferredContentMode": "desktop"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1200,
+      "backgroundColor": "#0A0E17"
+    }
+  }
+}

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="MainStream M2" />
+  <meta name="theme-color" content="#0A0E17" />
+  <meta name="author" content="Rogerr Carvajal (@rogerrcarvajal)" />
+  <title>Mackie MainStream Studio M2 — UVC Video &amp; Audio Capture (iPad Pro M2)</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="assets/Mainstream_Top.png" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Topbar Glassmorphic -->
+    <header class="topbar">
+      <div class="brand-group">
+        <img src="assets/Mainstream_Top.png" alt="Mackie MainStream Hardware" class="brand-logo" />
+        <div class="brand-title">
+          <h1>
+            Mackie MainStream Studio
+            <span class="badge-m2">iPad Pro M2</span>
+            <span class="badge-rea">REA UVC Fix</span>
+          </h1>
+          <div class="brand-subtitle">
+            Motor de Estabilización HDMI-a-USB-C UVC + Sincronía UAC2 48kHz 24-bit · Por <strong>Rogerr Carvajal</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="status-pills">
+        <div class="pill">
+          <span id="statusDot" class="dot warning"></span>
+          <span id="statusText">MODO PATRÓN SMPTE</span>
+        </div>
+        <div class="pill" id="resBadge">1920x1080</div>
+        <div class="pill" id="fpsBadge">60 FPS</div>
+        <a href="../Mackie-Matrix-App/index.html" class="btn btn-mackie" style="min-height:34px;padding:4px 12px;text-decoration:none;">
+          🎛️ Abrir Mackie Matrix M2
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="workspace-grid">
+      <!-- Left Column: Live UVC Monitor & 120Hz Broadcast Scopes -->
+      <section class="video-column">
+        <div class="panel" style="flex:1;">
+          <div class="panel-header">
+            <div class="panel-title">📹 Monitor de Entrada HDMI UVC (Passthrough 4K60 / Captura USB-C 1080p)</div>
+            <div style="font-size:0.75rem;color:var(--text-secondary);" id="hudSyncLabel">A/V SYNC: +45ms | 48kHz 24-bit</div>
+          </div>
+
+          <div class="monitor-stage">
+            <video id="uvcVideo" playsinline autoplay muted></video>
+            <canvas id="patternCanvas" width="1920" height="1080"></canvas>
+            <div class="hud-overlay">
+              <div class="hud-tag" id="hudDeviceLabel">Mackie MainStream UVC Engine Ready</div>
+              <div class="hud-tag">USB-C Isochronous Guard: ON</div>
+            </div>
+          </div>
+
+          <div class="transport-bar">
+            <div class="btn-group">
+              <button id="btnConnect" class="btn btn-primary">⚡ Conectar Entrada HDMI (UVC Lock)</button>
+              <button id="btnHotReset" class="btn btn-mackie">🔄 Hot-Reset UVC Bus</button>
+              <button id="btnPattern" class="btn">🎨 Señal SMPTE</button>
+            </div>
+            <div class="btn-group">
+              <button id="btnPip" class="btn">🖼️ PiP (Stage Manager)</button>
+              <button id="btnSnapshot" class="btn">📸 Captura PNG</button>
+              <button id="btnRecord" class="btn btn-danger">● REC Stream</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scopes Broadcast 120Hz ProMotion -->
+        <div class="scopes-row">
+          <div class="scope-box">
+            <div class="scope-label"><span>LUMA WAVEFORM (IRE)</span><span>120Hz</span></div>
+            <canvas id="waveformCanvas" class="scope-canvas" width="260" height="115"></canvas>
+          </div>
+          <div class="scope-box">
+            <div class="scope-label"><span>HISTOGRAMA RGB PARADE</span><span>BT.709</span></div>
+            <canvas id="histogramCanvas" class="scope-canvas" width="260" height="115"></canvas>
+          </div>
+          <div class="scope-box">
+            <div class="scope-label"><span>MEDIDOR AUDIO UAC2 (48kHz)</span><span>PEAK / RMS</span></div>
+            <canvas id="vuCanvas" class="scope-canvas" width="280" height="95"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: UVC Stabilizer Controls & Physical Hardware Surface -->
+      <aside class="panel">
+        <div class="panel-header">
+          <div class="panel-title">🛠️ Estabilizador UVC iPad Pro M2 &amp; Superficie MainStream</div>
+        </div>
+
+        <div class="control-scroll">
+          <!-- Card 1: UVC / UAC2 Handshake Stabilizer -->
+          <div class="control-card">
+            <h3>
+              <span>1. Corrección de Video UVC (iPadOS 17+)</span>
+              <span class="badge-m2">Anti-Drop</span>
+            </h3>
+            <div class="form-grid">
+              <div class="field">
+                <label for="uvcProfileSelect">Perfil de Ancho de Banda USB-C</label>
+                <select id="uvcProfileSelect" class="select-input"></select>
+              </div>
+              <div class="field">
+                <label for="avDelayRange">Compensación A/V Sync: <strong id="avDelayVal">45 ms</strong></label>
+                <input id="avDelayRange" type="range" min="0" max="300" value="45" class="range-input" />
+              </div>
+              <div class="field">
+                <label for="videoDeviceSelect">Endpoint de Video UVC (HDMI In)</label>
+                <select id="videoDeviceSelect" class="select-input"></select>
+              </div>
+              <div class="field">
+                <label for="audioDeviceSelect">Endpoint de Audio UAC2 (MainStream)</label>
+                <select id="audioDeviceSelect" class="select-input"></select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Physical Knobs of Mackie MainStream -->
+          <div class="control-card">
+            <h3>
+              <span>2. Controles Físicos Mackie MainStream</span>
+              <span style="font-size:0.7rem;color:var(--text-secondary);">Bus Analógico / USB</span>
+            </h3>
+            <div class="knobs-grid">
+              <div class="knob-widget">
+                <span class="knob-title">MAIN OUT</span>
+                <input id="knobMain" type="range" min="0" max="100" value="85" style="width:100%;" />
+                <span id="knobMainVal" class="knob-value">85%</span>
+              </div>
+              <div class="knob-widget">
+                <span class="knob-title">PHONES</span>
+                <input id="knobPhones" type="range" min="0" max="100" value="85" style="width:100%;" />
+                <span id="knobPhonesVal" class="knob-value">85%</span>
+              </div>
+              <div class="knob-widget">
+                <span class="knob-title">MIC GAIN (+60dB)</span>
+                <input id="knobMic" type="range" min="-20" max="60" value="38" style="width:100%;" />
+                <span id="knobMicVal" class="knob-value">38 dB</span>
+              </div>
+              <div class="knob-widget">
+                <span class="knob-title">CHAT MIX</span>
+                <input id="knobChat" type="range" min="0" max="100" value="50" style="width:100%;" />
+                <span id="knobChatVal" class="knob-value">50%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: 6 Programmable Keys on Mackie MainStream -->
+          <div class="control-card">
+            <h3>
+              <span>3. Teclas Programables MainStream (Keys 1–6)</span>
+              <span style="font-size:0.7rem;color:var(--text-secondary);">Touch / Apple Pencil</span>
+            </h3>
+            <div class="pads-grid">
+              <button class="macro-pad active" data-key="1" data-action="Escena Principal HDMI + Mic">
+                KEY 1 — ESCENA HDMI
+                <span>Fuente Principal 1080p</span>
+              </button>
+              <button class="macro-pad" data-key="2" data-action="Cámara USB-C / Chat View">
+                KEY 2 — USB CHAT
+                <span>Conmutar Hub USB-C</span>
+              </button>
+              <button class="macro-pad" data-key="3" data-action="Ducking Automático (-14dB)">
+                KEY 3 — VOICE DUCK
+                <span>Atenuar Juego al Hablar</span>
+              </button>
+              <button class="macro-pad" data-key="4" data-action="Disparar Sample Airhorn (A1)">
+                KEY 4 — AIRHORN
+                <span>Sample Pad A1</span>
+              </button>
+              <button class="macro-pad" data-key="5" data-action="Censor BLEEP 1kHz (A8)">
+                KEY 5 — BLEEP 1kHz
+                <span>Tono Censura En Vivo</span>
+              </button>
+              <button class="macro-pad" data-key="6" data-action="Mute Maestro Micrófono XLR">
+                KEY 6 — MIC MUTE
+                <span>Corte Instantáneo XLR</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 4: Live UVC Diagnostic Telemetry Log -->
+          <div class="control-card">
+            <h3>
+              <span>4. Telemetría REA UVC / UAC2 en Tiempo Real</span>
+              <span style="font-size:0.7rem;color:var(--accent-cyan);">Watchdog Activo</span>
+            </h3>
+            <div id="diagLog" class="diag-log"></div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-bar">
+      <div>
+        <strong>Mackie MainStream Studio M2</strong> · Ingeniería Inversa con <a href="../Docs/README.md">REA (Reverse Engineer Anything)</a>
+      </div>
+      <div>
+        Arquitectura y Desarrollo por <a href="https://github.com/rogerrcarvajal/REA" target="_blank" rel="noopener">Rogerr Carvajal (@rogerrcarvajal)</a> · iPadOS 17+ PWA / IPA Ready
+      </div>
+    </footer>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
