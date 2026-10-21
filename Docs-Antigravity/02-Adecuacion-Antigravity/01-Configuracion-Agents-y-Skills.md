@@ -1,7 +1,7 @@
 # ⚙️ Adecuación de `.agents/`, `SKILLS.md`, Reglas y Multi-Agentes en Antigravity
 
 > **Desarrollador Líder:** Rogerr Carvajal ([@rogerrcarvajal](https://github.com/rogerrcarvajal))  
-> **Ubicación:** `Docs/02-Adecuacion-Antigravity/01-Configuracion-Agents-y-Skills.md`  
+> **Ubicación:** `Docs-Antigravity/02-Adecuacion-Antigravity/01-Configuracion-Agents-y-Skills.md`  
 > **Archivos Configurados:** [`.agents/SKILLS.md`](../../.agents/SKILLS.md), [`.agents/agents/agents_registry.json`](../../.agents/agents/agents_registry.json), [`.agents/rules/`](../../.agents/rules/)
 
 ---

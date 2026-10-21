@@ -1,7 +1,7 @@
 # 🏗️ Arquitectura Hexagonal y Dominios del Motor REA (`src/`)
 
 > **Desarrollador Líder:** Rogerr Carvajal ([@rogerrcarvajal](https://github.com/rogerrcarvajal))  
-> **Ubicación:** `Docs/01-Arquitectura-REA/01-Arquitectura-Hexagonal-y-Dominios.md`  
+> **Ubicación:** `Docs-Antigravity/01-Arquitectura-REA/01-Arquitectura-Hexagonal-y-Dominios.md`  
 > **Referencia de Código:** [`AGENTS.md`](../../AGENTS.md), [`docs/architecture.mermaid`](../../docs/architecture.mermaid)
 
 ---

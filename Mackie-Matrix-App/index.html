@@ -11,7 +11,7 @@
   <title>Mackie Matrix Console M2 — Consola Digital 9x4 &amp; DSP (iPad Pro M2)</title>
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="apple-touch-icon" href="assets/matrix-software.png" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/styles.css?v=2.0.0" />
 </head>
 <body>
   <div class="app-shell">
@@ -25,13 +25,15 @@
             <span class="badge badge-m2">iPad Pro M2</span>
             <span class="badge badge-mackie">.mackie V1/V2 Native</span>
           </h1>
-          <div style="font-size:0.73rem;color:var(--text-secondary);" id="statusBanner">
+          <div style="font-size:0.71rem;color:var(--text-secondary);" id="statusBanner">
             Inicializando motor de enrutamiento 9 Canales × 4 Submixes...
           </div>
         </div>
       </div>
 
       <div class="toolbar-actions">
+        <button id="btnAudioTest" class="btn btn-amber">🎵 Probar Audio en Canales</button>
+        <button id="btnStopAudio" class="btn">⏹ Stop Audio</button>
         <input type="file" id="fileInputMackie" accept=".mackie,.ini,.txt" style="display:none;" />
         <button id="btnImportMackie" class="btn btn-cyan">📂 Importar .mackie</button>
         <button id="btnExportMackie" class="btn btn-primary">💾 Exportar .mackie</button>
@@ -64,16 +66,16 @@
         <div class="eq-layout">
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
             <div style="font-weight:700;color:var(--accent-mackie);">
-              ECUALIZADOR PARAMÉTRICO DE 5 BANDAS + CADENA VOCAL MVOICE (VST3 RECONSTRUCTED)
+              ECUALIZADOR PARAMÉTRICO DE 5 BANDAS (ARRASTRA LOS NODOS B1–B5 CON APPLE PENCIL O DEDO)
             </div>
             <div style="display:flex;align-items:center;gap:8px;">
-              <label for="eqPresetSelect" style="font-size:0.75rem;color:var(--text-secondary);">Preset `.mackie`:</label>
-              <select id="eqPresetSelect" class="btn" style="min-height:36px;"></select>
+              <label for="eqPresetSelect" style="font-size:0.74rem;color:var(--text-secondary);">Preset `.mackie`:</label>
+              <select id="eqPresetSelect" class="btn" style="min-height:34px;"></select>
             </div>
           </div>
 
           <div class="eq-canvas-wrap">
-            <canvas id="eqCurveCanvas" width="920" height="210"></canvas>
+            <canvas id="eqCurveCanvas" width="920" height="195"></canvas>
           </div>
 
           <div class="eq-bands-grid" id="eqBandsGrid"></div>
@@ -82,15 +84,15 @@
 
       <!-- View 3: 32 Sample Pads (Banks A, B, C, D) -->
       <section id="padsView" class="view-panel">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
           <div style="font-weight:700;color:var(--accent-cyan);">
-            SAMPLER INTERACTIVO DE 32 PADS (BANCOS A, B, C, D DEL ARCHIVO .MACKIE)
+            SAMPLER EN VIVO DE 32 PADS (AUDIO MP3 REAL DE TUS BANCOS MACKIE Y OBS)
           </div>
           <div style="display:flex;gap:6px;">
             <button class="view-tab active" data-bank="A">Banco A (Mackie)</button>
-            <button class="view-tab" data-bank="B">Banco B (Usuario OBS)</button>
-            <button class="view-tab" data-bank="C">Banco C</button>
-            <button class="view-tab" data-bank="D">Banco D</button>
+            <button class="view-tab" data-bank="B">Banco B (OBS Favoritos)</button>
+            <button class="view-tab" data-bank="C">Banco C (Extra OBS 1)</button>
+            <button class="view-tab" data-bank="D">Banco D (Extra OBS 2)</button>
           </div>
         </div>
         <div class="pads-bank-grid" id="padsGrid"></div>
@@ -99,23 +101,23 @@
       <!-- Right Column: 4 Output Submixes & VFX Quick Rack -->
       <aside class="master-column">
         <div>
-          <h3 style="font-size:0.8rem;color:var(--accent-cyan);text-transform:uppercase;margin-bottom:8px;">
+          <h3 style="font-size:0.76rem;color:var(--accent-cyan);text-transform:uppercase;margin-bottom:6px;">
             🔊 4 Buses de Salida (Submixes 0–3)
           </h3>
-          <div id="masterSubmixList" style="display:flex;flex-direction:column;gap:8px;"></div>
+          <div id="masterSubmixList" style="display:flex;flex-direction:column;gap:6px;"></div>
         </div>
 
         <div class="submix-fader-row">
-          <div style="font-weight:700;font-size:0.75rem;color:var(--accent-mackie);">
+          <div style="font-weight:700;font-size:0.73rem;color:var(--accent-mackie);">
             🎙️ PROCESADOR VOCAL VFX &amp; MVOICE
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:4px;">
-            <button class="ch-mini-btn link-on" onclick="this.classList.toggle('link-on')">Noise Gate</button>
-            <button class="ch-mini-btn link-on" onclick="this.classList.toggle('link-on')">Compresor</button>
-            <button class="ch-mini-btn" onclick="this.classList.toggle('link-on')">Reverb Studio</button>
-            <button class="ch-mini-btn" onclick="this.classList.toggle('link-on')">Delay / Echo</button>
-            <button class="ch-mini-btn" onclick="this.classList.toggle('link-on')">Telephone FX</button>
-            <button class="ch-mini-btn" onclick="this.classList.toggle('link-on')">Pitch / Robot</button>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:4px;">
+            <button class="ch-mini-btn link-on" data-vfx="noiseGateOn">Noise Gate</button>
+            <button class="ch-mini-btn link-on" data-vfx="compressorOn">Compresor</button>
+            <button class="ch-mini-btn" data-vfx="reverbOn">Reverb Studio</button>
+            <button class="ch-mini-btn" data-vfx="delayOn">Delay / Echo</button>
+            <button class="ch-mini-btn" data-vfx="telephoneOn">Telephone FX</button>
+            <button class="ch-mini-btn" data-vfx="pitchRobotOn">Pitch / Robot</button>
           </div>
         </div>
       </aside>
@@ -124,7 +126,7 @@
     <!-- Footer -->
     <footer class="footer-bar">
       <div>
-        <strong>Mackie Matrix Console M2</strong> · Reconstruido desde <code>Mackie Matrix.exe</code> (Qt6 PE32+ x86_64) con <a href="../Docs/README.md">REA</a>
+        <strong>Mackie Matrix Console M2</strong> · Reconstruido desde <code>Mackie Matrix.exe</code> (Qt6 PE32+ x86_64) con <a href="../Docs-Antigravity/README.md">REA</a>
       </div>
       <div>
         Arquitectura y Desarrollo por <a href="https://github.com/rogerrcarvajal/REA" target="_blank" rel="noopener">Rogerr Carvajal (@rogerrcarvajal)</a> · iPad Pro M2 Ready
@@ -132,6 +134,6 @@
     </footer>
   </div>
 
-  <script type="module" src="js/app.js"></script>
+  <script type="module" src="js/app.js?v=2.0.0"></script>
 </body>
 </html>

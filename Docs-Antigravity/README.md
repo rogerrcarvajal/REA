@@ -49,3 +49,12 @@ graph TD
 | **`04-Workflow-iPad-Pro-M2/`** | [`01-Pipeline-Ingenieria-Inversa-iPad-Pro-M2.md`](./04-Workflow-iPad-Pro-M2/01-Pipeline-Ingenieria-Inversa-iPad-Pro-M2.md) | Metodología de 5 fases para analizar apps de escritorio/móviles/web con REA y auditar brechas para el iPad Pro M2. |
 | **`04-Workflow-iPad-Pro-M2/`** | [`02-Guia-Empaquetado-IPA-PWA-Catalyst.md`](./04-Workflow-iPad-Pro-M2/02-Guia-Empaquetado-IPA-PWA-Catalyst.md) | Guía técnica para empaquetar e instalar aplicaciones en el iPad Pro M2 vía `.ipa` (Capacitor/SwiftUI/AltStore/Sideloadly) o PWA Standalone iPadOS. |
 | **`05-Bitacora-Implementacion/`** | [`01-Walkthrough-Adecuacion-Viva.md`](./05-Bitacora-Implementacion/01-Walkthrough-Adecuacion-Viva.md) | Bitácora cronológica de todos los comandos, decisiones de diseño, respaldos de reglas y validaciones ejecutadas. |
+
+---
+
+## 🎛️ 3. Aplicaciones Desarrolladas con REA para iPad Pro M2 (Mackie MainStream & Mackie Matrix)
+
+| Aplicación | Carpeta de Desarrollo | Documentación Viva | Propósito en iPad Pro M2 (iPadOS 17+ / Apple Silicon ARM64) |
+| :--- | :--- | :--- | :--- |
+| **Mackie MainStream Studio M2** | [`../Mackie-MainStream-App/`](../Mackie-MainStream-App/index.html) | [`../Mackie-MainStream-App/Docs/README.md`](../Mackie-MainStream-App/Docs/README.md) | Soluciona los fallos de entrada de video HDMI UVC al conectar el Mackie MainStream al iPad Pro M2 mediante perfiles UVC con cascada de fallback (`1080p30 Safe Hub`, `1080p60`, `720p60`), bloqueo de reloj UAC2 a `48 kHz / 24-bit`, compensador A/V Sync (`0–300 ms`), Watchdog Anti-Drop y Scopes Broadcast a 120Hz (Waveform, Histograma RGB, VU/LUFS). |
+| **Mackie Matrix Console M2** | [`../Mackie-Matrix-App/`](../Mackie-Matrix-App/index.html) | [`../Mackie-Matrix-App/Docs/README.md`](../Mackie-Matrix-App/Docs/README.md) | Reconstrucción funcional completa de `Mackie Matrix.exe` (`ev_78d3359d81c24faf54d45ebacfb1498f0616e46ac2e3615bff7ffedbe85918fd`) para iPad Pro M2: matriz de enrutamiento de 9 canales de entrada × 4 Submixes de salida, importador/exportador nativo de archivos `.mackie` (`[V1]` y `[V2]`), EQ Paramétrico interactivo de 5 bandas, cadena vocal MVoice/VFX y Sampler de 32 Pads (Bancos A, B, C, D). |

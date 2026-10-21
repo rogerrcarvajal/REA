@@ -1,7 +1,7 @@
 # 📦 Guía Práctica de Empaquetado e Instalación en iPad Pro M2 (IPA, Capacitor, Catalyst y PWA Standalone)
 
 > **Desarrollador Líder:** Rogerr Carvajal ([@rogerrcarvajal](https://github.com/rogerrcarvajal))  
-> **Ubicación:** `Docs/04-Workflow-iPad-Pro-M2/02-Guia-Empaquetado-IPA-PWA-Catalyst.md`  
+> **Ubicación:** `Docs-Antigravity/04-Workflow-iPad-Pro-M2/02-Guia-Empaquetado-IPA-PWA-Catalyst.md`  
 > **Propósito:** Plantillas listas para producción que permiten instalar y ejecutar sin problemas en el **iPad Pro M2** cualquier aplicación reconstruida o adecuada mediante REA.
 
 ---

@@ -1,7 +1,7 @@
 # 🧰 Catálogo de Contratos MCP de REA y Flujo de Evidencia (`src/server/`)
 
 > **Desarrollador Líder:** Rogerr Carvajal ([@rogerrcarvajal](https://github.com/rogerrcarvajal))  
-> **Ubicación:** `Docs/03-Catalogo-MCP-y-Herramientas/01-Contratos-MCP-y-Flujo-Evidencia.md`  
+> **Ubicación:** `Docs-Antigravity/03-Catalogo-MCP-y-Herramientas/01-Contratos-MCP-y-Flujo-Evidencia.md`  
 > **Referencia de Código:** [`src/server/`](../../src/server), [`docs/mcp-contracts.md`](../../docs/mcp-contracts.md)
 
 ---

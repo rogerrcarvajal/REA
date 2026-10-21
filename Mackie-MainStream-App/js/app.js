@@ -1,11 +1,11 @@
 /**
  * @file app.js
  * @author Rogerr Carvajal (@rogerrcarvajal)
- * @description Controlador principal de UI, Scopes ProMotion 120Hz (Luma Waveform, Histograma RGB, VU/LUFS)
+ * @description Controlador principal de UI, Streamer UVC en Vivo (`MainStream HDMI`), Scopes ProMotion 120Hz
  *              y Grabador Local MP4/WebM para Mackie MainStream Studio M2 en iPad Pro M2.
  */
 
-import { MackieMainStreamUVCEngine, UVC_PROFILES } from './uvc-engine.js';
+import { MackieMainStreamUVCEngine, UVC_PROFILES } from './uvc-engine.js?v=2.0.0';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const videoEl = document.getElementById('uvcVideo');
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   let mediaRecorder = null;
   let recordedChunks = [];
 
-  // Inicializar selector de perfiles UVC
+  // Inicializar selector de perfiles UVC reales del Mackie MainStream
   Object.entries(UVC_PROFILES).forEach(([key, cfg]) => {
     const opt = document.createElement('option');
     opt.value = key;
@@ -49,6 +49,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const appendLog = (line) => {
     const div = document.createElement('div');
     div.textContent = line;
+    if (line.includes('[WARN]')) div.style.color = '#FCD34D';
+    if (line.includes('[ERROR]')) div.style.color = '#FDA4AF';
     diagLogEl.prepend(div);
     while (diagLogEl.children.length > 40) {
       diagLogEl.removeChild(diagLogEl.lastChild);
@@ -59,7 +61,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     statusDot.className = 'dot ' + (info.state === 'online' ? 'online' : info.state === 'pattern' ? 'warning' : 'danger');
     statusText.textContent =
       info.state === 'online'
-        ? 'UVC LOCK ACTIVO'
+        ? 'UVC LOCK ACTIVO (LIVE)'
         : info.state === 'pattern'
         ? 'MODO PATRÓN SMPTE'
         : 'SIN SEÑAL UVC';
@@ -78,7 +80,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   async function refreshDevices() {
     const { videoInputs, audioInputs } = await engine.enumerateMackieDevices();
 
-    videoDeviceSelect.innerHTML = '<option value="">Auto-Detectar Mackie MainStream HDMI UVC</option>';
+    videoDeviceSelect.innerHTML = '';
     videoInputs.forEach((d, idx) => {
       const opt = document.createElement('option');
       opt.value = d.deviceId;
@@ -87,7 +89,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       videoDeviceSelect.appendChild(opt);
     });
 
-    audioDeviceSelect.innerHTML = '<option value="">Auto-Detectar Mackie MainStream UAC2 (48kHz)</option>';
+    audioDeviceSelect.innerHTML = '';
     audioInputs.forEach((d, idx) => {
       const opt = document.createElement('option');
       opt.value = d.deviceId;
@@ -98,29 +100,30 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   await refreshDevices();
-  if (navigator.mediaDevices) {
-    navigator.mediaDevices.ondevicechange = () => {
-      appendLog('[USB-C BUS] Cambio detectado en topología USB-C del iPad Pro M2. Actualizando endpoints...');
-      refreshDevices();
-    };
-  }
 
-  // Eventos de conexión y estabilización UVC
+  // Conectar automáticamente a la entrada real MainStream HDMI al abrir la aplicación
+  await engine.startCapture(profileSelect.value);
+
   btnConnect.addEventListener('click', async () => {
+    engine.playMacroSound('beep');
     engine.selectedVideoDeviceId = videoDeviceSelect.value;
     engine.selectedAudioDeviceId = audioDeviceSelect.value;
     await engine.startCapture(profileSelect.value);
-    await refreshDevices();
   });
 
   btnHotReset.addEventListener('click', async () => {
-    appendLog('[HOT-RESET] Reiniciando endpoint UVC/UAC2 y limpiando buffers de video...');
-    engine.scheduleAutoRecovery('Manual Hot-Reset iPad Pro M2');
+    engine.playMacroSound('beep');
+    await engine.triggerHotReset();
   });
 
   btnPattern.addEventListener('click', () => {
-    engine.stopCapture(false);
-    engine.startTestPatternMode();
+    engine.playMacroSound('beep');
+    if (engine.isPatternMode) {
+      engine.startCapture(profileSelect.value);
+    } else {
+      engine.startTestPatternMode();
+      appendLog('[SMPTE] Generador de barras de color SMPTE activado.');
+    }
   });
 
   profileSelect.addEventListener('change', () => {
@@ -144,7 +147,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     engine.setAvSyncDelay(val);
   });
 
-  // Controles físicos simulados del panel superior de Mackie MainStream
+  // Controles físicos del panel superior de Mackie MainStream
   const bindKnob = (inputId, valId, suffix, callback) => {
     const input = document.getElementById(inputId);
     const label = document.getElementById(valId);
@@ -157,54 +160,104 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   bindKnob('knobMain', 'knobMainVal', '%', (v) => engine.setMainGain(v));
   bindKnob('knobPhones', 'knobPhonesVal', '%', (v) => engine.setHeadphoneGain(v));
-  bindKnob('knobMic', 'knobMicVal', ' dB', (v) => appendLog(`[HARDWARE] Ganancia Preamp Mic XLR/TRS ajustada a ${v > 0 ? '+' : ''}${v} dB`));
-  bindKnob('knobChat', 'knobChatVal', '%', (v) => appendLog(`[HARDWARE] Balance Game/Chat Mix ajustado al ${v}%`));
+  bindKnob('knobMic', 'knobMicVal', ' dB', (v) => {
+    engine.syncHardwareControl({ micGain: v });
+    appendLog(`[HARDWARE] Ganancia Preamp Mic XLR/TRS ajustada a ${v > 0 ? '+' : ''}${v} dB`);
+  });
+  bindKnob('knobChat', 'knobChatVal', '%', (v) => {
+    engine.syncHardwareControl({ chatMix: v });
+    appendLog(`[HARDWARE] Balance Game/Chat Mix ajustado al ${v}%`);
+  });
 
-  // Pads programables 1-6 del Mackie MainStream
+  // 6 Teclas Programables con Acciones Reales (Cambio de fuente, Voice Ducking, Airhorn, Bleep 1kHz, Mic Mute)
   document.querySelectorAll('.macro-pad').forEach((pad) => {
-    pad.addEventListener('click', () => {
-      pad.classList.toggle('active');
-      const keyName = pad.dataset.key;
+    pad.addEventListener('click', async () => {
+      const keyNum = Number(pad.dataset.key);
       const actionName = pad.dataset.action;
-      appendLog(`[CONTROL KEY ${keyName}] Ejecutada macro física MainStream: ${actionName}`);
+
+      if (keyNum === 1) {
+        document.querySelectorAll('.macro-pad[data-key="1"], .macro-pad[data-key="2"]').forEach((p) => p.classList.remove('active'));
+        pad.classList.add('active');
+        engine.playMacroSound('beep');
+        videoDeviceSelect.value = 'MainStream HDMI';
+        engine.selectedVideoDeviceId = 'MainStream HDMI';
+        await engine.startCapture(profileSelect.value);
+      } else if (keyNum === 2) {
+        document.querySelectorAll('.macro-pad[data-key="1"], .macro-pad[data-key="2"]').forEach((p) => p.classList.remove('active'));
+        pad.classList.add('active');
+        engine.playMacroSound('beep');
+        videoDeviceSelect.value = 'OBS Virtual Camera';
+        engine.selectedVideoDeviceId = 'OBS Virtual Camera';
+        await engine.startCapture(profileSelect.value);
+      } else if (keyNum === 3) {
+        pad.classList.toggle('active');
+        engine.voiceDucking = pad.classList.contains('active');
+        engine.playMacroSound('beep');
+        engine.syncHardwareControl({ voiceDucking: engine.voiceDucking });
+      } else if (keyNum === 4) {
+        pad.classList.add('active');
+        engine.playMacroSound('airhorn');
+        setTimeout(() => pad.classList.remove('active'), 650);
+      } else if (keyNum === 5) {
+        pad.classList.add('active');
+        engine.playMacroSound('bleep');
+        setTimeout(() => pad.classList.remove('active'), 650);
+      } else if (keyNum === 6) {
+        pad.classList.toggle('active');
+        engine.micMuted = pad.classList.contains('active');
+        engine.playMacroSound('beep');
+        engine.syncHardwareControl({ micMuted: engine.micMuted });
+      }
+
+      appendLog(`[CONTROL KEY ${keyNum}] Ejecutada acción en vivo: ${actionName}`);
     });
   });
 
-  // Picture-in-Picture (PiP) para multitarea Stage Manager en iPad Pro M2
+  // Picture-in-Picture (PiP) compatible incluso en modo Bridge usando captureStream del Canvas
   btnPip.addEventListener('click', async () => {
     try {
       if (document.pictureInPictureElement) {
         await document.exitPictureInPicture();
-      } else if (videoEl.readyState >= 2) {
+        return;
+      }
+      if (engine.mode !== 'direct-uvc' && patternCanvas.captureStream) {
+        videoEl.srcObject = patternCanvas.captureStream(30);
+        await videoEl.play();
+      }
+      if (videoEl.webkitSetPresentationMode) {
+        videoEl.webkitSetPresentationMode('picture-in-picture');
+        appendLog('[PiP] Modo Picture-in-Picture de iPadOS Stage Manager activado.');
+      } else if (videoEl.requestPictureInPicture) {
         await videoEl.requestPictureInPicture();
-      } else {
-        appendLog('[PiP] Activa primero una señal de video UVC real para entrar en Picture-in-Picture.');
+        appendLog('[PiP] Modo Picture-in-Picture activado.');
       }
     } catch (err) {
-      appendLog(`[PiP] Error en iPadOS PiP: ${err.message}`);
+      appendLog(`[PiP] Información: ${err.message}`, 'warn');
     }
   });
 
   // Captura de fotograma PNG instantáneo
   btnSnapshot.addEventListener('click', () => {
+    engine.playMacroSound('beep');
     const snap = document.createElement('canvas');
     snap.width = 1920;
     snap.height = 1080;
     const ctx = snap.getContext('2d');
-    if (engine.isPatternMode) {
-      ctx.drawImage(patternCanvas, 0, 0, snap.width, snap.height);
-    } else {
+    if (engine.mode === 'direct-uvc' && videoEl.readyState >= 2) {
       ctx.drawImage(videoEl, 0, 0, snap.width, snap.height);
+    } else {
+      ctx.drawImage(patternCanvas, 0, 0, snap.width, snap.height);
     }
     const a = document.createElement('a');
     a.href = snap.toDataURL('image/png');
     a.download = `Mackie-MainStream-iPadM2-${Date.now()}.png`;
     a.click();
-    appendLog('[SNAPSHOT] Fotograma 1080p exportado exitosamente.');
+    appendLog('[SNAPSHOT] Fotograma 1080p de MainStream HDMI exportado exitosamente.');
   });
 
   // Grabación Local de Video/Audio en iPad Pro M2
   btnRecord.addEventListener('click', () => {
+    engine.playMacroSound('beep');
     if (mediaRecorder && mediaRecorder.state === 'recording') {
       mediaRecorder.stop();
       btnRecord.classList.remove('recording');
@@ -235,10 +288,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     mediaRecorder.start(1000);
     btnRecord.classList.add('recording');
     btnRecord.textContent = '■ Detener REC';
-    appendLog(`[RECORDER] Grabando captura directa (${mimeType}) en almacenamiento local de iPadOS...`);
+    appendLog(`[RECORDER] Grabando señal en vivo (${mimeType}) en iPadOS...`);
   });
 
-  // Renderizado ProMotion 120Hz de Patrón SMPTE y Scopes Broadcast
+  // Renderizado ProMotion 120Hz de Video Bridge / SMPTE y Scopes Broadcast
   const pCtx = patternCanvas.getContext('2d');
   const wCtx = waveformCanvas.getContext('2d');
   const hCtx = histogramCanvas.getContext('2d');
@@ -262,7 +315,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     pCtx.fillStyle = '#0F172A';
     pCtx.fillRect(0, h * 0.72, w, h * 0.28);
 
-    // Barra de movimiento de sincronía 60/120Hz
     const xPos = ((Math.sin(t * 2.2) + 1) * 0.5) * (w - 180) + 20;
     pCtx.fillStyle = '#84CC16';
     pCtx.fillRect(xPos, h * 0.77, 140, 18);
@@ -275,9 +327,35 @@ document.addEventListener('DOMContentLoaded', async () => {
     pCtx.fillText(`1920x1080P | UAC2 48.0kHz 24-BIT | A/V DELAY +${engine.avSyncDelayMs}ms | TIME: ${t.toFixed(2)}s`, 36, h * 0.95);
   }
 
+  function drawBridgeLiveFrame(t) {
+    const w = patternCanvas.width;
+    const h = patternCanvas.height;
+    if (engine.bridgeFrameImg && engine.bridgeFrameImg.complete && engine.bridgeFrameImg.naturalWidth > 0) {
+      pCtx.drawImage(engine.bridgeFrameImg, 0, 0, w, h);
+
+      // HUD de telemetría discreto en esquina inferior
+      pCtx.fillStyle = 'rgba(10, 14, 23, 0.72)';
+      pCtx.fillRect(24, h - 64, 820, 42);
+      pCtx.fillStyle = '#84CC16';
+      pCtx.font = 'bold 20px monospace';
+      const muteBanner = engine.micMuted ? ' [MIC MUTED]' : '';
+      const duckBanner = engine.voiceDucking ? ' [DUCKING -14dB]' : '';
+      pCtx.fillText(
+        `● LIVE UVC: ${engine.selectedVideoDeviceId} | A/V SYNC +${engine.avSyncDelayMs}ms${muteBanner}${duckBanner}`,
+        38,
+        h - 36
+      );
+    } else {
+      drawSmptePattern(t);
+    }
+  }
+
   function renderScopes(now) {
     const t = now / 1000;
-    if (engine.isPatternMode) {
+    if (engine.mode === 'bridge') {
+      drawBridgeLiveFrame(t);
+      sCtx.drawImage(patternCanvas, 0, 0, 96, 54);
+    } else if (engine.isPatternMode) {
       drawSmptePattern(t);
       sCtx.drawImage(patternCanvas, 0, 0, 96, 54);
     } else if (videoEl.readyState >= 2) {
@@ -298,7 +376,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     wCtx.moveTo(0, wh * 0.8); wCtx.lineTo(ww, wh * 0.8);
     wCtx.stroke();
 
-    wCtx.fillStyle = 'rgba(0, 242, 254, 0.55)';
+    wCtx.fillStyle = 'rgba(0, 242, 254, 0.65)';
     for (let x = 0; x < 96; x++) {
       for (let y = 0; y < 54; y += 2) {
         const idx = (y * 96 + x) * 4;
@@ -368,13 +446,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     requestAnimationFrame(renderScopes);
   }
 
-  // Iniciar en modo patrón por defecto hasta pulsar Conectar o auto-iniciar
-  engine.startTestPatternMode();
-  appendLog('Mackie MainStream Studio M2 inicializado. Listo para negociar UVC 1080p en iPad Pro M2.');
   requestAnimationFrame(renderScopes);
 
-  // Registrar Service Worker PWA
+  // Actualizar Service Worker forzando recarga de caché nueva
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
+    navigator.serviceWorker.getRegistrations().then((regs) => regs.forEach((r) => r.update()));
   }
 });

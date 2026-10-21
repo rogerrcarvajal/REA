@@ -1,7 +1,7 @@
 # 🗺️ Mapa General de Archivos Generados y Estructura del Proyecto REA
 
 > **Desarrollador Líder:** Rogerr Carvajal ([@rogerrcarvajal](https://github.com/rogerrcarvajal))  
-> **Ubicación:** `Docs/00-Indice-General/01-Mapa-de-Archivos-Generados.md`  
+> **Ubicación:** `Docs-Antigravity/00-Indice-General/01-Mapa-de-Archivos-Generados.md`  
 > **Propósito:** Relacionar cada directorio y archivo generado en el repositorio con su función arquitectónica y su contraparte en la documentación viva.
 
 ---
@@ -41,13 +41,13 @@ REA/
 
 | Directorio / Archivo en el Proyecto | Naturaleza | Subcarpeta de `Docs/` que lo Documenta |
 | :--- | :--- | :--- |
-| `src/domain/`, `src/contracts/`, `src/application/`, `src/composition/`, `src/server/`, `src/cli/` | Núcleo Hexagonal de REA (TypeScript) | [`Docs/01-Arquitectura-REA/01-Arquitectura-Hexagonal-y-Dominios.md`](../01-Arquitectura-REA/01-Arquitectura-Hexagonal-y-Dominios.md) |
-| `bridge/hopper_bridge.py`, `bridge/ghidra/*.java`, `bridge/android/ReaJadxBridge.java`, `bridge/native/*.swift`, `native/windows/` | Puentes de análisis profundo y supervisión de procesos | [`Docs/01-Arquitectura-REA/02-Puentes-Nativos-y-Proveedores.md`](../01-Arquitectura-REA/02-Puentes-Nativos-y-Proveedores.md) |
-| `.agents/SKILLS.md`, `.agents/skills/*`, `.agents/rules/*`, `.agents/agents/agents_registry.json`, `.gemini/*` | Personalización de Google Antigravity en 3 niveles | [`Docs/02-Adecuacion-Antigravity/01-Configuracion-Agents-y-Skills.md`](../02-Adecuacion-Antigravity/01-Configuracion-Agents-y-Skills.md) |
-| `.agents/mcp_config.json`, `~/.gemini/config/mcp_config.json`, `.git/config` | Integración de servidores MCP (`github` y `rea`) y remotos Git | [`Docs/02-Adecuacion-Antigravity/02-Sincronizacion-GitHub-MCP.md`](../02-Adecuacion-Antigravity/02-Sincronizacion-GitHub-MCP.md) |
-| `src/server/register*Tools.ts`, `server.json`, `docs/mcp-contracts.md` | Catálogo de más de 170 herramientas MCP y contrato `Evidence` | [`Docs/03-Catalogo-MCP-y-Herramientas/01-Contratos-MCP-y-Flujo-Evidencia.md`](../03-Catalogo-MCP-y-Herramientas/01-Contratos-MCP-y-Flujo-Evidencia.md) |
-| `.agents/skills/rea-ipad-pro-m2-porter/SKILL.md`, `.agents/rules/60-rea-reverse-engineering-and-ipad-m2.md` | Flujo de ingeniería inversa y portabilidad a iPad Pro M2 | [`Docs/04-Workflow-iPad-Pro-M2/01-Pipeline-Ingenieria-Inversa-iPad-Pro-M2.md`](../04-Workflow-iPad-Pro-M2/01-Pipeline-Ingenieria-Inversa-iPad-Pro-M2.md) y [`02-Guia-Empaquetado-IPA-PWA-Catalyst.md`](../04-Workflow-iPad-Pro-M2/02-Guia-Empaquetado-IPA-PWA-Catalyst.md) |
-| `Docs/05-Bitacora-Implementacion/` | Trazabilidad histórica y respaldos de reglas | [`Docs/05-Bitacora-Implementacion/01-Walkthrough-Adecuacion-Viva.md`](../05-Bitacora-Implementacion/01-Walkthrough-Adecuacion-Viva.md) |
+| `src/domain/`, `src/contracts/`, `src/application/`, `src/composition/`, `src/server/`, `src/cli/` | Núcleo Hexagonal de REA (TypeScript) | [`Docs-Antigravity/01-Arquitectura-REA/01-Arquitectura-Hexagonal-y-Dominios.md`](../01-Arquitectura-REA/01-Arquitectura-Hexagonal-y-Dominios.md) |
+| `bridge/hopper_bridge.py`, `bridge/ghidra/*.java`, `bridge/android/ReaJadxBridge.java`, `bridge/native/*.swift`, `native/windows/` | Puentes de análisis profundo y supervisión de procesos | [`Docs-Antigravity/01-Arquitectura-REA/02-Puentes-Nativos-y-Proveedores.md`](../01-Arquitectura-REA/02-Puentes-Nativos-y-Proveedores.md) |
+| `.agents/SKILLS.md`, `.agents/skills/*`, `.agents/rules/*`, `.agents/agents/agents_registry.json`, `.gemini/*` | Personalización de Google Antigravity en 3 niveles | [`Docs-Antigravity/02-Adecuacion-Antigravity/01-Configuracion-Agents-y-Skills.md`](../02-Adecuacion-Antigravity/01-Configuracion-Agents-y-Skills.md) |
+| `.agents/mcp_config.json`, `~/.gemini/config/mcp_config.json`, `.git/config` | Integración de servidores MCP (`github` y `rea`) y remotos Git | [`Docs-Antigravity/02-Adecuacion-Antigravity/02-Sincronizacion-GitHub-MCP.md`](../02-Adecuacion-Antigravity/02-Sincronizacion-GitHub-MCP.md) |
+| `src/server/register*Tools.ts`, `server.json`, `docs/mcp-contracts.md` | Catálogo de más de 170 herramientas MCP y contrato `Evidence` | [`Docs-Antigravity/03-Catalogo-MCP-y-Herramientas/01-Contratos-MCP-y-Flujo-Evidencia.md`](../03-Catalogo-MCP-y-Herramientas/01-Contratos-MCP-y-Flujo-Evidencia.md) |
+| `.agents/skills/rea-ipad-pro-m2-porter/SKILL.md`, `.agents/rules/60-rea-reverse-engineering-and-ipad-m2.md` | Flujo de ingeniería inversa y portabilidad a iPad Pro M2 | [`Docs-Antigravity/04-Workflow-iPad-Pro-M2/01-Pipeline-Ingenieria-Inversa-iPad-Pro-M2.md`](../04-Workflow-iPad-Pro-M2/01-Pipeline-Ingenieria-Inversa-iPad-Pro-M2.md) y [`02-Guia-Empaquetado-IPA-PWA-Catalyst.md`](../04-Workflow-iPad-Pro-M2/02-Guia-Empaquetado-IPA-PWA-Catalyst.md) |
+| `Docs-Antigravity/05-Bitacora-Implementacion/` | Trazabilidad histórica y respaldos de reglas | [`Docs-Antigravity/05-Bitacora-Implementacion/01-Walkthrough-Adecuacion-Viva.md`](../05-Bitacora-Implementacion/01-Walkthrough-Adecuacion-Viva.md) |
 
 ---
 

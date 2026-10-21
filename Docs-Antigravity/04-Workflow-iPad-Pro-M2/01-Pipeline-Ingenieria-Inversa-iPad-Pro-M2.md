@@ -1,7 +1,7 @@
 # 📱 Pipeline de Ingeniería Inversa con REA para Adecuar Aplicaciones al iPad Pro M2
 
 > **Desarrollador Líder:** Rogerr Carvajal ([@rogerrcarvajal](https://github.com/rogerrcarvajal))  
-> **Ubicación:** `Docs/04-Workflow-iPad-Pro-M2/01-Pipeline-Ingenieria-Inversa-iPad-Pro-M2.md`  
+> **Ubicación:** `Docs-Antigravity/04-Workflow-iPad-Pro-M2/01-Pipeline-Ingenieria-Inversa-iPad-Pro-M2.md`  
 > **Dispositivo Objetivo:** iPad Pro M2 (Chip Apple M2 8-core CPU / 10-core GPU, 8GB/16GB RAM, iPadOS, Liquid Retina / XDR ProMotion 120Hz, Apple Pencil 2 Hover, Magic Keyboard)  
 > **Habilidad Asociada:** [`.agents/skills/rea-ipad-pro-m2-porter/SKILL.md`](../../.agents/skills/rea-ipad-pro-m2-porter/SKILL.md)
 

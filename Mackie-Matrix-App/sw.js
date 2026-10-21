@@ -1,28 +1,13 @@
 /**
  * @file sw.js
  * @author Rogerr Carvajal (@rogerrcarvajal)
- * @description Service Worker Offline-First para Mackie Matrix Console M2 en iPadOS 17+
+ * @description Service Worker Network-First v2.0.0 para Mackie Matrix Console M2 en iPad Pro M2
  */
 
-const CACHE_NAME = 'mackie-matrix-m2-v1.0.0';
-const ASSETS = [
-  './',
-  './index.html',
-  './css/styles.css',
-  './js/mackie-parser.js',
-  './js/dsp-engine.js',
-  './js/app.js',
-  './manifest.webmanifest',
-  './presets/MainStream-Config-Backup-V2.mackie',
-  './presets/Mackie-Mainstream-Backup-V1.mackie',
-  './assets/matrix-software.png',
-  './assets/Mainstream_Top.png'
-];
+const CACHE_NAME = 'mackie-matrix-m2-v2.0.0';
 
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)).then(() => self.skipWaiting())
-  );
+self.addEventListener('install', () => {
+  self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
@@ -34,14 +19,16 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  if (event.request.method !== 'GET') return;
+  if (event.request.method !== 'GET' || event.request.url.includes('api/bridge.php')) {
+    return;
+  }
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      return cached || fetch(event.request).then((response) => {
+    fetch(event.request)
+      .then((response) => {
         const clone = response.clone();
         caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
         return response;
-      }).catch(() => caches.match('./index.html'));
-    })
+      })
+      .catch(() => caches.match(event.request))
   );
 });

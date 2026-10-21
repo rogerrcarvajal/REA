@@ -1,7 +1,7 @@
 # 📋 Bitácora Viva de Implementación y Adecuación de REA en Antigravity
 
 > **Desarrollador Líder:** Rogerr Carvajal ([@rogerrcarvajal](https://github.com/rogerrcarvajal))  
-> **Ubicación:** `Docs/05-Bitacora-Implementacion/01-Walkthrough-Adecuacion-Viva.md`  
+> **Ubicación:** `Docs-Antigravity/05-Bitacora-Implementacion/01-Walkthrough-Adecuacion-Viva.md`  
 > **Fecha de Ejecución:** 17 de Octubre de 2026  
 > **Estado:** Completado y Sincronizado con GitHub MCP
 
@@ -22,7 +22,7 @@ Esta bitácora registra cada paso técnico realizado para transformar el directo
 
 ---
 
-## 2. Respaldo de Reglas Activas en `Docs/05-Bitacora-Implementacion/`
+## 2. Respaldo de Reglas Activas en `Docs-Antigravity/05-Bitacora-Implementacion/`
 
 Siguiendo el estándar de la Configuración Profunda de Antigravity, todas las reglas jerárquicas activas (`00` a `60`) y el registro de agentes (`agents_registry.json`) se mantienen respaldados en `.agents/rules/`, `.gemini/rules/` y documentados en esta carpeta para auditoría continua.
 
@@ -38,6 +38,6 @@ Analiza con REA la aplicación [Ruta o URL de la App], extrae su arquitectura y 
 
 Automáticamente el ecosistema ejecutará:
 1. **Fase 1 (REA Inspection):** Selección de la herramienta REA óptima (`analyze_javascript_application`, `inspect_artifact`, `project_apple_application_graph`, `inspect_macho`, `capture_browser_scenario`, etc.).
-2. **Fase 2 (Documentación de Evidencia):** Registro del grafo de arquitectura y evidencias en `Docs/04-Workflow-iPad-Pro-M2/`.
+2. **Fase 2 (Documentación de Evidencia):** Registro del grafo de arquitectura y evidencias en `Docs-Antigravity/04-Workflow-iPad-Pro-M2/`.
 3. **Fase 3 (Auditoría M2):** Identificación de bloqueos para el chip M2 (`arm64`), Stage Manager, ProMotion 120Hz y Apple Pencil 2 Hover.
 4. **Fase 4 y 5 (Reconstrucción e Instalación):** Generación del código adaptado y empaquetado listo para instalar en tu **iPad Pro M2**.

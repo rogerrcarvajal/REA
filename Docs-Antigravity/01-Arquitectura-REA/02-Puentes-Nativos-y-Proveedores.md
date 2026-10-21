@@ -1,7 +1,7 @@
 # 🌉 Puentes Nativos (`bridge/`), Addon Windows (`native/`) y Proveedores de Análisis
 
 > **Desarrollador Líder:** Rogerr Carvajal ([@rogerrcarvajal](https://github.com/rogerrcarvajal))  
-> **Ubicación:** `Docs/01-Arquitectura-REA/02-Puentes-Nativos-y-Proveedores.md`  
+> **Ubicación:** `Docs-Antigravity/01-Arquitectura-REA/02-Puentes-Nativos-y-Proveedores.md`  
 > **Referencia de Código:** [`bridge/`](../../bridge), [`native/`](../../native), [`package.json`](../../package.json)
 
 ---

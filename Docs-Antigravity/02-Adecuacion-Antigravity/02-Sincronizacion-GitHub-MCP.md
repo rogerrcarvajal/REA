@@ -1,7 +1,7 @@
 # 🔌 Conexión MCP (REA + GitHub) y Sincronización del Repositorio
 
 > **Desarrollador Líder:** Rogerr Carvajal ([@rogerrcarvajal](https://github.com/rogerrcarvajal))  
-> **Ubicación:** `Docs/02-Adecuacion-Antigravity/02-Sincronizacion-GitHub-MCP.md`  
+> **Ubicación:** `Docs-Antigravity/02-Adecuacion-Antigravity/02-Sincronizacion-GitHub-MCP.md`  
 > **Repositorio Propio (`origin`):** [`https://github.com/rogerrcarvajal/REA.git`](https://github.com/rogerrcarvajal/REA)  
 > **Repositorio Original (`upstream`):** [`https://github.com/morluto/rea.git`](https://github.com/morluto/rea)
 

@@ -11,6 +11,19 @@
     "CHANGELOG.md",
     "package-lock.json",
     "_reference/**",
-    "third_party/**"
+    "third_party/**",
+    ".gemini/**",
+    ".agents/SKILLS.md",
+    ".agents/mcp_config.json",
+    ".agents/agents/**",
+    ".agents/rules/**",
+    ".agents/skills/brand-identity/**",
+    ".agents/skills/changelog-generator/**",
+    ".agents/skills/rea-ipad-pro-m2-porter/**",
+    ".agents/skills/skill-creator/**",
+    ".agents/skills/sprint-issue-developer/**",
+    "Docs-Antigravity/**",
+    "Mackie-MainStream-App/**",
+    "Mackie-Matrix-App/**"
   ]
 }

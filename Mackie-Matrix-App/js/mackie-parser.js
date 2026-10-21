@@ -1,8 +1,8 @@
 /**
  * @file mackie-parser.js
  * @author Rogerr Carvajal (@rogerrcarvajal)
- * @description Parser y Serializador nativo para archivos de configuración `.mackie` (Esquemas [V1] y [V2] Qt QSettings INI)
- *              reconstruido mediante REA a partir de `Mackie Matrix.exe` y `MainStream - Config Backup.mackie`.
+ * @description Parser y Serializador nativo para archivos `.mackie` ([V1] y [V2])
+ *              con mapeo directo a los 78 archivos MP3 reales de `D:/OBS/Efectos de Sonido/` copiados en `./sounds/`.
  */
 
 export const DEFAULT_MACKIE_STATE = {
@@ -37,10 +37,10 @@ export const DEFAULT_MACKIE_STATE = {
       iconEmoji: '🎤',
       color: '#4eb96c',
       volumes: [70, 70, 70, 70],
-      mutes: [true, true, true, true],
+      mutes: [false, false, false, false],
       solos: [false, false, false, false],
       linked: [false, false, false, false],
-      eqPreset: 'Flat',
+      eqPreset: 'Eq Main Stream',
       mvoiceEnabled: true
     },
     {
@@ -51,7 +51,7 @@ export const DEFAULT_MACKIE_STATE = {
       iconEmoji: '🔌',
       color: '#85cca9',
       volumes: [70, 70, 70, 70],
-      mutes: [true, true, true, true],
+      mutes: [false, false, false, false],
       solos: [false, false, false, false],
       linked: [false, false, false, false],
       eqPreset: 'Flat',
@@ -134,10 +134,10 @@ export const DEFAULT_MACKIE_STATE = {
       iconID: 13,
       iconEmoji: '🎹',
       color: '#9ccc56',
-      volumes: [68, 70, 70, 70],
+      volumes: [85, 85, 85, 85],
       mutes: [false, false, false, false],
       solos: [false, false, false, false],
-      linked: [false, false, false, false],
+      linked: [true, true, true, true],
       eqPreset: 'Flat',
       mvoiceEnabled: true
     }
@@ -181,54 +181,53 @@ export const DEFAULT_MACKIE_STATE = {
   },
   samples: {
     A: [
-      { id: 'A1', name: 'Airhorn', color: '#9ccc56', synth: 'airhorn', hotkey: 'F1', filePath: ':/resources/sounds/airhorn.wav' },
-      { id: 'A2', name: 'Scream', color: '#4eb96c', synth: 'scream', hotkey: 'F2', filePath: ':/resources/sounds/scream.wav' },
-      { id: 'A3', name: 'Applause', color: '#85cca9', synth: 'applause', hotkey: 'F3', filePath: ':/resources/sounds/applause.wav' },
-      { id: 'A4', name: 'Laughter', color: '#64cbe5', synth: 'laughter', hotkey: 'F4', filePath: ':/resources/sounds/laughter.wav' },
-      { id: 'A5', name: 'Sad Trombone', color: '#a276b3', synth: 'trombone', hotkey: 'F5', filePath: ':/resources/sounds/trombone.wav' },
-      { id: 'A6', name: 'Crickets', color: '#ee3524', synth: 'crickets', hotkey: 'F6', filePath: ':/resources/sounds/crickets.wav' },
-      { id: 'A7', name: 'After Dark', color: '#ffc909', synth: 'chord', hotkey: 'F7', filePath: ':/resources/sounds/mackie_theme.wav' },
-      { id: 'A8', name: 'BLEEP 1kHz', color: '#ee3524', synth: 'bleep', hotkey: 'F8', filePath: ':/resources/sounds/bleep_1k.wav' }
+      { id: 'A1', name: 'Airhorn', color: '#9ccc56', synth: 'airhorn', hotkey: 'F1', audioUrl: './sounds/goofy-ahh-car-horn-sound-effect.mp3', filePath: ':/resources/sounds/airhorn.wav' },
+      { id: 'A2', name: 'Scream', color: '#4eb96c', synth: 'scream', hotkey: 'F2', audioUrl: './sounds/HELP ME!.mp3', filePath: ':/resources/sounds/scream.wav' },
+      { id: 'A3', name: 'Applause', color: '#85cca9', synth: 'applause', hotkey: 'F3', audioUrl: './sounds/levantense-saturado.mp3', filePath: ':/resources/sounds/applause.wav' },
+      { id: 'A4', name: 'Laughter', color: '#64cbe5', synth: 'laughter', hotkey: 'F4', audioUrl: './sounds/risada-mp3cut.mp3', filePath: ':/resources/sounds/laughter.wav' },
+      { id: 'A5', name: 'Sad Trombone', color: '#a276b3', synth: 'trombone', hotkey: 'F5', audioUrl: './sounds/wah-wah-sound-effect.mp3', filePath: ':/resources/sounds/trombone.wav' },
+      { id: 'A6', name: 'Crickets / Mosquito', color: '#ee3524', synth: 'crickets', hotkey: 'F6', audioUrl: './sounds/mosquito.mp3', filePath: ':/resources/sounds/crickets.wav' },
+      { id: 'A7', name: 'After Dark', color: '#ffc909', synth: 'chord', hotkey: 'F7', audioUrl: './sounds/george-micael-wham-careless-whisper-1.mp3', filePath: ':/resources/sounds/mackie_theme.wav' },
+      { id: 'A8', name: 'BLEEP 1kHz', color: '#ee3524', synth: 'bleep', hotkey: 'F8', audioUrl: '', filePath: ':/resources/sounds/bleep_1k.wav' }
     ],
     B: [
-      { id: 'B1', name: 'Directes by Robert', color: '#9ccc56', synth: 'chord', hotkey: 'F9', filePath: 'D:/OBS/Efectos de Sonido/directed-by-robert.mp3' },
-      { id: 'B2', name: 'Cell sintio terror', color: '#4eb96c', synth: 'subdrop', hotkey: 'F10', filePath: 'D:/OBS/Efectos de Sonido/en-ese-momento-cell-sintio-el-verdadero-terror-v-descarga.mp3' },
-      { id: 'B3', name: 'Alguien con vida', color: '#85cca9', synth: 'sonar', hotkey: 'F11', filePath: 'D:/OBS/Efectos de Sonido/hay-alguien-ahi-con-vida-larga.mp3' },
-      { id: 'B4', name: 'Como estan (Dross)', color: '#9ccc56', synth: 'stinger', hotkey: 'F12', filePath: 'D:/OBS/Efectos de Sonido/hola-cono-de-sus-madres-dross.mp3' },
-      { id: 'B5', name: 'La vida es un carrusel', color: '#a276b3', synth: 'arp', hotkey: 'PAD5', filePath: 'D:/OBS/Efectos de Sonido/la-vida-es-un-carrusel.mp3' },
-      { id: 'B6', name: 'Sala de espera', color: '#ee3524', synth: 'lofi', hotkey: 'PAD6', filePath: 'D:/OBS/Efectos de Sonido/o-sonidos-de-espera.mp3' },
-      { id: 'B7', name: 'Patria y mas Patria', color: '#f6ec3b', synth: 'brass', hotkey: 'PAD7', filePath: 'D:/OBS/Efectos de Sonido/patria.mp3' },
-      { id: 'B8', name: 'Apareciste (Picoro)', color: '#ee3524', synth: 'impact', hotkey: 'PAD8', filePath: 'D:/OBS/Efectos de Sonido/por-fin-apareciste-malnacido-picoro.mp3' }
+      { id: 'B1', name: 'Directed by Robert', color: '#9ccc56', synth: 'chord', hotkey: 'F9', audioUrl: './sounds/well-be-right-back-green-screen_8oEb98L.mp3', filePath: 'D:/OBS/Efectos de Sonido/directed-by-robert.mp3' },
+      { id: 'B2', name: 'Cell sintio terror', color: '#4eb96c', synth: 'subdrop', hotkey: 'F10', audioUrl: './sounds/en-ese-momento-cell-sintio-el-verdadero-terror-v-descarga.mp3', filePath: 'D:/OBS/Efectos de Sonido/en-ese-momento-cell-sintio-el-verdadero-terror-v-descarga.mp3' },
+      { id: 'B3', name: 'Alguien con vida', color: '#85cca9', synth: 'sonar', hotkey: 'F11', audioUrl: './sounds/hay-alguien-ahi-con-vida-larga.mp3', filePath: 'D:/OBS/Efectos de Sonido/hay-alguien-ahi-con-vida-larga.mp3' },
+      { id: 'B4', name: 'Como estan (Dross)', color: '#9ccc56', synth: 'stinger', hotkey: 'F12', audioUrl: './sounds/hola-cono-de-sus-madres-dross.mp3', filePath: 'D:/OBS/Efectos de Sonido/hola-cono-de-sus-madres-dross.mp3' },
+      { id: 'B5', name: 'La vida es un carrusel', color: '#a276b3', synth: 'arp', hotkey: 'PAD5', audioUrl: './sounds/la-vida-es-un-carrusel.mp3', filePath: 'D:/OBS/Efectos de Sonido/la-vida-es-un-carrusel.mp3' },
+      { id: 'B6', name: 'Sala de espera', color: '#ee3524', synth: 'lofi', hotkey: 'PAD6', audioUrl: './sounds/o-sonidos-de-espera.mp3', filePath: 'D:/OBS/Efectos de Sonido/o-sonidos-de-espera.mp3' },
+      { id: 'B7', name: 'Patria y mas Patria', color: '#f6ec3b', synth: 'brass', hotkey: 'PAD7', audioUrl: './sounds/patria.mp3', filePath: 'D:/OBS/Efectos de Sonido/patria.mp3' },
+      { id: 'B8', name: 'Apareciste (Picoro)', color: '#ee3524', synth: 'impact', hotkey: 'PAD8', audioUrl: './sounds/por-fin-apareciste-malnacido-picoro.mp3', filePath: 'D:/OBS/Efectos de Sonido/por-fin-apareciste-malnacido-picoro.mp3' }
     ],
-    C: Array.from({ length: 8 }, (_, i) => ({
-      id: `C${i + 1}`,
-      name: `Custom C${i + 1}`,
-      color: '#64cbe5',
-      synth: 'sonar',
-      hotkey: `C${i + 1}`,
-      filePath: ''
-    })),
-    D: Array.from({ length: 8 }, (_, i) => ({
-      id: `D${i + 1}`,
-      name: `Custom D${i + 1}`,
-      color: '#a276b3',
-      synth: 'arp',
-      hotkey: `D${i + 1}`,
-      filePath: ''
-    }))
+    C: [
+      { id: 'C1', name: 'Estoy cansado jefe', color: '#64cbe5', synth: 'chord', hotkey: 'C1', audioUrl: './sounds/estoy-cansado-jefe.mp3', filePath: 'D:/OBS/Efectos de Sonido/estoy-cansado-jefe.mp3' },
+      { id: 'C2', name: 'Billie Jean', color: '#ffc909', synth: 'chord', hotkey: 'C2', audioUrl: './sounds/michael-jackson-billie-jean.mp3', filePath: 'D:/OBS/Efectos de Sonido/michael-jackson-billie-jean.mp3' },
+      { id: 'C3', name: 'Pink Panther', color: '#ea1a5b', synth: 'chord', hotkey: 'C3', audioUrl: './sounds/the-pink-panther-theme-song-original-version.mp3', filePath: 'D:/OBS/Efectos de Sonido/the-pink-panther-theme-song-original-version.mp3' },
+      { id: 'C4', name: 'Ser Millonario', color: '#a276b3', synth: 'chord', hotkey: 'C4', audioUrl: './sounds/quien-quiere-ser-millonario_ScfDHTc.mp3', filePath: 'D:/OBS/Efectos de Sonido/quien-quiere-ser-millonario_ScfDHTc.mp3' },
+      { id: 'C5', name: 'Y se marchó', color: '#9ccc56', synth: 'chord', hotkey: 'C5', audioUrl: './sounds/y-se-marcho.mp3', filePath: 'D:/OBS/Efectos de Sonido/y-se-marcho.mp3' },
+      { id: 'C6', name: 'Hello Darkness', color: '#64cbe5', synth: 'chord', hotkey: 'C6', audioUrl: './sounds/hellodarknessmyoldfriend.mp3', filePath: 'D:/OBS/Efectos de Sonido/hellodarknessmyoldfriend.mp3' },
+      { id: 'C7', name: 'Qué difícil me la pusiste', color: '#f0582a', synth: 'chord', hotkey: 'C7', audioUrl: './sounds/que-dificil-me-la-pusiste.mp3', filePath: 'D:/OBS/Efectos de Sonido/que-dificil-me-la-pusiste.mp3' },
+      { id: 'C8', name: 'No hay plata', color: '#ee3524', synth: 'chord', hotkey: 'C8', audioUrl: './sounds/no-hay-plata.mp3', filePath: 'D:/OBS/Efectos de Sonido/no-hay-plata.mp3' }
+    ],
+    D: [
+      { id: 'D1', name: 'Mii Channel Music', color: '#9ccc56', synth: 'chord', hotkey: 'D1', audioUrl: './sounds/mii-channel-music.mp3', filePath: 'D:/OBS/Efectos de Sonido/mii-channel-music.mp3' },
+      { id: 'D2', name: 'Free Bird Solo', color: '#4eb96c', synth: 'chord', hotkey: 'D2', audioUrl: './sounds/free-bird-solo.mp3', filePath: 'D:/OBS/Efectos de Sonido/free-bird-solo.mp3' },
+      { id: 'D3', name: 'Harry Potter Fail', color: '#85cca9', synth: 'chord', hotkey: 'D3', audioUrl: './sounds/harry-potter-themesong-fail-recorder-cover-1.mp3', filePath: 'D:/OBS/Efectos de Sonido/harry-potter-themesong-fail-recorder-cover-1.mp3' },
+      { id: 'D4', name: 'Hector El Father', color: '#ffc909', synth: 'chord', hotkey: 'D4', audioUrl: './sounds/hector-el-father.mp3', filePath: 'D:/OBS/Efectos de Sonido/hector-el-father.mp3' },
+      { id: 'D5', name: 'Identifícate', color: '#a276b3', synth: 'chord', hotkey: 'D5', audioUrl: './sounds/identificate.mp3', filePath: 'D:/OBS/Efectos de Sonido/identificate.mp3' },
+      { id: 'D6', name: 'Mario Meme', color: '#ee3524', synth: 'chord', hotkey: 'D6', audioUrl: './sounds/mario-meme.mp3', filePath: 'D:/OBS/Efectos de Sonido/mario-meme.mp3' },
+      { id: 'D7', name: 'Sonido de Puerta', color: '#64cbe5', synth: 'chord', hotkey: 'D7', audioUrl: './sounds/sonido-de-puerta.mp3', filePath: 'D:/OBS/Efectos de Sonido/sonido-de-puerta.mp3' },
+      { id: 'D8', name: 'No creo risa', color: '#f0582a', synth: 'chord', hotkey: 'D8', audioUrl: './sounds/no-creoo-risa.mp3', filePath: 'D:/OBS/Efectos de Sonido/no-creoo-risa.mp3' }
+    ]
   },
   vfx: {
-    delayOn: false,
-    delayTime: 280,
-    delayFeedback: 35,
-    delayLevel: 25,
+    noiseGateOn: true,
+    compressorOn: true,
     reverbOn: false,
-    reverbDecay: 1.8,
-    reverbLevel: 22,
+    delayOn: false,
     telephoneOn: false,
-    voiceFxOn: false,
-    pitchShift: 0,
-    robotVoice: false
+    pitchRobotOn: false
   }
 };
 
@@ -242,9 +241,6 @@ const ICON_EMOJI_MAP = {
   17: '🌐'
 };
 
-/**
- * Parsea un archivo `.mackie` real ([V1] o [V2]) y devuelve un estado estructurado para Mackie Matrix M2
- */
 export function parseMackieConfigFile(rawText) {
   const state = structuredClone(DEFAULT_MACKIE_STATE);
   const lines = rawText.split(/\r?\n/);
@@ -264,7 +260,6 @@ export function parseMackieConfigFile(rawText) {
     rawMap[key] = val;
   }
 
-  // Actualizar volúmenes de submixes (submixes\0..3\volume)
   for (let s = 0; s < 4; s++) {
     const vol = rawMap[`submixes\\${s}\\volume`];
     const mute = rawMap[`submixes\\${s}\\mute`];
@@ -276,7 +271,6 @@ export function parseMackieConfigFile(rawText) {
     if (outName) state.submixes[s].outputAudioDeviceName = outName;
   }
 
-  // Actualizar canales actuales (channels_current\<encodedKey>\<prop>)
   state.channels.forEach((ch) => {
     const encodedKey = encodeURIComponent(ch.key).replace(/\(/g, '%28').replace(/\)/g, '%29');
     const prefixCandidates = [
@@ -308,7 +302,6 @@ export function parseMackieConfigFile(rawText) {
     }
   });
 
-  // Canal de Samples
   for (let s = 0; s < 4; s++) {
     const sv = rawMap[`samples_channel\\volume_${s}`];
     if (sv !== undefined) state.channels[8].volumes[s] = Number(sv);
@@ -317,9 +310,6 @@ export function parseMackieConfigFile(rawText) {
   return state;
 }
 
-/**
- * Exporta el estado actual al formato `.mackie` [V2] compatible con Mackie Matrix en Windows e iPadOS
- */
 export function exportMackieConfigFile(state) {
   const lines = [`[${state.schemaVersion || 'V2'}]`];
   state.channels.slice(0, 8).forEach((ch) => {
