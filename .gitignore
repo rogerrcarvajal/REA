@@ -79,6 +79,8 @@ Thumbs.db
 /Mackie-MainStream-App/assets/live_probe.jpg
 /Mackie-Matrix-App/sounds/
 /Mackie-Matrix-App/presets/live-matrix-state.json
+# Redacted raw Antigravity chat backup (local only; Markdown history is versioned).
+/Docs-Antigravity/06-Historial-Chat/raw/
 
 # Complete static website output, including generated language editions.
 website/_site/
