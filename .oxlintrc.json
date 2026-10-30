@@ -1,12 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": [
-    "typescript",
-    "import",
-    "unicorn",
-    "oxc",
-    "vitest"
-  ],
+  "plugins": ["typescript", "import", "unicorn", "oxc", "vitest"],
   "rules": {
     "rea/no-buffer-deep-equality": "error",
     "rea/cancellation-cause": "error",
@@ -16,19 +10,11 @@
     "no-useless-escape": [
       "warn",
       {
-        "allowRegexCharacters": [
-          "-"
-        ]
+        "allowRegexCharacters": ["-"]
       }
     ],
-    "complexity": [
-      "warn",
-      20
-    ],
-    "max-depth": [
-      "warn",
-      4
-    ],
+    "complexity": ["warn", 20],
+    "max-depth": ["warn", 4],
     "max-lines": [
       "warn",
       {
@@ -45,10 +31,7 @@
         "skipComments": true
       }
     ],
-    "max-params": [
-      "warn",
-      4
-    ],
+    "max-params": ["warn", 4],
     "no-var": "warn",
     "no-var-requires": "error",
     "typescript/no-import-type-side-effects": "error",
@@ -75,10 +58,7 @@
     "rea/no-fixture-root-cleanup": "error",
     "typescript/no-floating-promises": "error",
     "typescript/no-misused-promises": "warn",
-    "typescript/return-await": [
-      "error",
-      "error-handling-correctness-only"
-    ],
+    "typescript/return-await": ["error", "error-handling-correctness-only"],
     "typescript/switch-exhaustiveness-check": [
       "error",
       {
@@ -99,19 +79,13 @@
       }
     },
     {
-      "files": [
-        "src/**/*.ts"
-      ],
+      "files": ["src/**/*.ts"],
       "rules": {
         "typescript/no-misused-promises": "error"
       }
     },
     {
-      "files": [
-        "tests/**/*.ts",
-        "src/**/*.test.ts",
-        "src/**/*.fixture.ts"
-      ],
+      "files": ["tests/**/*.ts", "src/**/*.test.ts", "src/**/*.fixture.ts"],
       "rules": {
         "max-lines": "off",
         "max-lines-per-function": [
@@ -126,20 +100,14 @@
       }
     },
     {
-      "files": [
-        "src/application/**/*.test.ts"
-      ],
+      "files": ["src/application/**/*.test.ts"],
       "rules": {
         "no-restricted-imports": [
           "error",
           {
             "patterns": [
               {
-                "group": [
-                  "**/server/**",
-                  "**/cli.*",
-                  "**/main.*"
-                ],
+                "group": ["**/server/**", "**/cli.*", "**/main.*"],
                 "message": "Service tests must use application ports rather than CLI or MCP entrypoints."
               }
             ]
@@ -148,9 +116,7 @@
       }
     },
     {
-      "files": [
-        "tests/composition/**/*.test.ts"
-      ],
+      "files": ["tests/composition/**/*.test.ts"],
       "rules": {
         "no-restricted-imports": [
           "error",
@@ -176,10 +142,7 @@
       }
     },
     {
-      "files": [
-        "tests/**/*.test.ts",
-        "src/**/*.test.ts"
-      ],
+      "files": ["tests/**/*.test.ts", "src/**/*.test.ts"],
       "rules": {
         "vitest/valid-expect": [
           "warn",
@@ -212,9 +175,7 @@
       }
     },
     {
-      "files": [
-        "scripts/fixtures/javascript-recovery/code-split/entry.mjs"
-      ],
+      "files": ["scripts/fixtures/javascript-recovery/code-split/entry.mjs"],
       "rules": {
         "typescript/no-floating-promises": "off"
       }
