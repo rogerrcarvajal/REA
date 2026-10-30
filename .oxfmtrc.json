@@ -23,6 +23,7 @@
     ".agents/skills/**",
     "Docs-Antigravity/**",
     "Mackie-MainStream-App/**",
-    "Mackie-Matrix-App/**"
+    "Mackie-Matrix-App/**",
+    "REA-iPad-Agentic-IDE/**"
   ]
 }
