@@ -27,12 +27,13 @@ const validPath = (path) =>
   /^(src|tests)\//.test(path) &&
   !/[\\\0\r\n]/.test(path) &&
   !path.split("/").some((part) => ["", ".", ".."].includes(part));
+const MAX_RECORDED_CHANGED_PATHS = 64;
 const full = (reason, changedPaths = []) => ({
   version: 1,
   mode: "full",
   owners: [],
   changedTests: [],
-  changedPaths,
+  changedPaths: changedPaths.slice(0, MAX_RECORDED_CHANGED_PATHS),
   reason,
 });
 
@@ -56,7 +57,7 @@ export function planTestSelection(files, event, tier) {
     mode: "candidate",
     owners: [...owners].sort(),
     changedTests: [...new Set(changedTests)].sort(),
-    changedPaths: files,
+    changedPaths: files.slice(0, MAX_RECORDED_CHANGED_PATHS),
     reason:
       "Observe affected leaf owners; retain integration and unowned tests",
   };
