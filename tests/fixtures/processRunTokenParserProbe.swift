@@ -152,6 +152,39 @@ struct ProcessRunTokenParserProbe {
       parse: .failure(.invalidBuffer),
       codeSigningFlags: { 0 }
     )
+    // A restricted native process can expose an incomplete argv layout before
+    // the parser reaches the withheld environment (CI observed mdworker here).
+    let incompleteRestrictedArguments = [
+      RunTokenReadError.invalidBuffer,
+      .appleVectorUnavailable,
+    ].map { failure in
+      [UInt32(0x0400_0000), UInt32(0x0000_0800), nil].map { flags in
+        let observation = processRunTokenObservation(
+          pid: 1,
+          parse: .failure(failure),
+          codeSigningFlags: { flags }
+        )
+        return ["state": observation.state, "reason": observation.reason ?? ""]
+      }
+    }
+    let signedReadableTokens = [UInt32(0x0400_0000), UInt32(0x0000_0800)].map { flags in
+      let observation = processRunTokenObservation(
+        pid: 1,
+        parse: .success(realToken),
+        codeSigningFlags: { flags }
+      )
+      return observation.state == "readable" && observation.run_id == "owned-token"
+    }
+    let signedInvalidTokens = [RunTokenReadError.duplicateToken, .invalidTokenEncoding].map { failure in
+      [UInt32(0x0400_0000), UInt32(0x0000_0800)].map { flags in
+        let observation = processRunTokenObservation(
+          pid: 1,
+          parse: .failure(failure),
+          codeSigningFlags: { flags }
+        )
+        return ["state": observation.state, "reason": observation.reason ?? ""]
+      }
+    }
     let duplicateTokenFailsClosed: Bool
     do {
       _ = try parseProcessEnvironment(in: fixture(
@@ -259,6 +292,9 @@ struct ProcessRunTokenParserProbe {
         "state": malformedObservation.state,
         "reason": malformedObservation.reason as Any? ?? NSNull(),
       ],
+      "incompleteRestrictedArguments": incompleteRestrictedArguments,
+      "signedReadableTokens": signedReadableTokens,
+      "signedInvalidTokens": signedInvalidTokens,
       "duplicateTokenFailsClosed": duplicateTokenFailsClosed,
       "missingAppleBoundaryFailsClosed": missingAppleBoundaryFailsClosed,
       "emptyArgv0Read": emptyArgv0Read.runId == "empty-argv0-token",

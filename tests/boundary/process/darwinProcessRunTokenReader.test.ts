@@ -1313,6 +1313,28 @@ it.skipIf(!onDarwin)(
         finalAssignmentArgumentRead: true,
         missingAppleBoundaryFailsClosed: true,
         malformedBuffersRejected: true,
+        incompleteRestrictedArguments: [
+          "malformed_procargs",
+          "apple_vector_unavailable",
+        ].map((reason) => [
+          {
+            state: "unavailable",
+            reason: "platform_binary_environment_withheld",
+          },
+          {
+            state: "unavailable",
+            reason: "restricted_process_environment_withheld",
+          },
+          { state: "unavailable", reason },
+        ]),
+        signedReadableTokens: [true, true],
+        signedInvalidTokens: [
+          "duplicate_run_token",
+          "invalid_run_token_encoding",
+        ].map((reason) => [
+          { state: "unavailable", reason },
+          { state: "unavailable", reason },
+        ]),
         malformedObservation: {
           state: "unavailable",
           reason: "malformed_procargs",

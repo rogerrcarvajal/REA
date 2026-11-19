@@ -226,8 +226,15 @@ it("does not assign a peer's later cancellation to a descriptor that already fai
   const gate = new Promise<void>((resolve) => {
     release = resolve;
   });
+  let firstClosing!: () => void;
+  const firstCloseStarted = new Promise<void>((resolve) => {
+    firstClosing = resolve;
+  });
   fault.onClose = async (handle) => {
-    if (handle === fault.handles[0]) return;
+    if (handle === fault.handles[0]) {
+      firstClosing();
+      return;
+    }
     entered();
     await gate;
   };
@@ -236,7 +243,8 @@ it("does not assign a peer's later cancellation to a descriptor that already fai
     .listSessions({ signal: controller.signal })
     .catch((cause: unknown) => cause);
   try {
-    await waiting;
+    await Promise.all([waiting, firstCloseStarted]);
+    // Let the first close rejection propagate while its peer remains gated.
     await new Promise((resolve) => setImmediate(resolve));
     controller.abort(reason);
     release();
